@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <script>
+        function CBR_XML_Daily_Ru(rates) {
+          function trend(current, previous) {
+            if (current > previous) return ' ▲';
+            if (current < previous) return ' ▼';
+            return '';
+          }
+        
+          
+          var prevDate = rates.PreviousDate;
+          console.log(prevDate);
+          
+          
+
+          var USDrate = rates.Valute.USD.Value;
+          var USDratePrevious = rates.Valute.USD.Previous;
+          var USDname = rates.Valute.USD.CharCode;        
+          var USD = document.getElementById('USD');      
+          var USDFullname = rates.Valute.USD.Name; 
+          var USDDiff;
+          USDDiff = USDrate / USDratePrevious * 100;
+          USD.innerHTML = USD.innerHTML.replace('00,0000', USDrate);
+          USD.innerHTML = USD.innerHTML.replace('123%', USDDiff.toFixed(2) + '%');                    
+          USD.innerHTML += trend(rates.Valute.USD.Value, rates.Valute.USD.Previous); 
+          USD.innerHTML = USD.innerHTML.replace('Название валюты', USDname);
+          USD.innerHTML = USD.innerHTML.replace('Полное название валюты', USDFullname)
+          
+          
+          var EURrate = rates.Valute.EUR.Value
+          var EURratePrevious = rates.Valute.EUR.Previous
+          var EUR = document.getElementById('EUR');
+          var EURname = rates.Valute.EUR.CharCode; 
+          var EURFullname = rates.Valute.EUR.Name
+          var EURDiff;
+          EURDiff = EURrate / EURratePrevious * 100;
+          EUR.innerHTML = EUR.innerHTML.replace('00,0000', EURrate);
+          EUR.innerHTML += trend(rates.Valute.EUR.Value, rates.Valute.EUR.Previous);
+          EUR.innerHTML = EUR.innerHTML.replace('123%', EURDiff.toFixed(2) + '%');
+          EUR.innerHTML = EUR.innerHTML.replace('Название валюты', EURname);
+          EUR.innerHTML = EUR.innerHTML.replace('Полное название валюты', EURFullname)
+        }
+      
+      
+
+        </script>
+        <link rel="dns-prefetch" href="https://www.cbr-xml-daily.ru/" />
+        <script src="https://www.cbr-xml-daily.ru/daily_jsonp.js" async></script>
+        
+        
+        
+</head>
+<body>
+    
+    <div id="USD" class="tooltip">Название валюты — 00,0000 руб. Разница: 123% <span class="tooltiptext">Полное название валюты</span></div>
+    <div id="EUR" class="tooltip">Название валюты — 00,0000 руб. Разница: 123% <span class="tooltiptext">Полное название валюты</span></div>
+    
+</body>
+</html>
